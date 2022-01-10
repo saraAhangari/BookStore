@@ -1,3 +1,4 @@
+using BookStore.Client.Service;
 using BookStore.Server.DBcontext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

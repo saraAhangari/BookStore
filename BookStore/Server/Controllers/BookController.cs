@@ -21,7 +21,9 @@ namespace BookStore.Server.Controllers
         }
         private async Task<List<Book>> GetDbBooks()
         {
-            return await _context.Books.Include(b => b.Category).ToListAsync();
+            return await _context.Books.Include(b => b.Category)
+                .Include(a => a.publisher)
+                .ToListAsync();
         }
 
         [HttpGet]
@@ -35,7 +37,7 @@ namespace BookStore.Server.Controllers
         {
             var book = await _context.Books
                 .Include(b => b.Category)
-                //.Include(b => b.publisher)
+                .Include(b => b.publisher)
                 .FirstOrDefaultAsync(b => b.Id == id);
             if (book == null)
                 return NotFound("Book wasn't found. Too bad. :(");
@@ -49,11 +51,11 @@ namespace BookStore.Server.Controllers
             return Ok(await _context.Categories.ToListAsync());
         }
 
-        //[HttpGet("publishers")]
-        //public async Task<IActionResult> GetPublishers()
-        //{
-        //    return Ok(await _context.publishers.ToListAsync());
-        //}
+        [HttpGet("publishers")]
+        public async Task<IActionResult> GetPublishers()
+        {
+            return Ok(await _context.publishers.ToListAsync());
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateBook(Book book)
@@ -70,15 +72,15 @@ namespace BookStore.Server.Controllers
         {
             var dbBook = await _context.Books
                 .Include(b => b.Category)
-                //.Include(b => b.publisher)
+                .Include(b => b.publisher)
                 .FirstOrDefaultAsync(b => b.Id == id);
             if (dbBook == null)
                 return NotFound("Book wasn't found. Too bad. :(");
 
             dbBook.Title = book.Title;
             dbBook.Description = book.Description;
-            dbBook.categoryId= book.categoryId;
-            //dbBook.publisherId = book.publisherId;
+            dbBook.categoryId = book.categoryId;
+            dbBook.publisherId = book.publisherId;
 
             await _context.SaveChangesAsync();
             return Ok(await GetDbBooks());
@@ -89,7 +91,7 @@ namespace BookStore.Server.Controllers
         {
             var dbBook = await _context.Books
                 .Include(b => b.Category)
-                //.Include(b => b.publisher)
+                .Include(b => b.publisher)
                 .FirstOrDefaultAsync(b => b.Id == id);
             if (dbBook == null)
                 return NotFound("Book wasn't found. Too bad. :(");

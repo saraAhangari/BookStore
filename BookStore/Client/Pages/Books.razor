@@ -24,6 +24,7 @@ else
                                 <div class="card-body">
                                     <h5 class="card-title">#@book.Id @book.Title</h5>
                                     <p class="card-text">Genre: @book.Category.Name</p>
+                                    <p class="card-text">Publisher: @book.publisher.Name</p>
                                     <a href="/books" @onclick="(() => ShowBook(book.Id))">Show&nbsp;</a>
                                     <a href="/books" @onclick="(() => EditBook(book.Id))">Edit&nbsp;</a>
                                     <a href="/books" @onclick="(() => DeleteBook(book.Id))">Delete&nbsp;</a>

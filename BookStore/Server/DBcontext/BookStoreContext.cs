@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BookStore.Client.Contract;
 
 namespace BookStore.Server.DBcontext
 {
@@ -16,8 +17,8 @@ namespace BookStore.Server.DBcontext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().HasData(
-                new Book { Id = 1, Title = "power", Description = "nothing"},
-                new Book { Id = 2, Title = "I,Tonya", Description = "nothing"}
+                new Book { Id = 1, Title = "power", Description = "nothing", categoryId = 2, publisherId = 1 },
+                new Book { Id = 2, Title = "I,Tonya", Description = "nothing", categoryId = 3, publisherId = 1 }
             );
 
 
@@ -30,11 +31,12 @@ namespace BookStore.Server.DBcontext
             );
 
             //modelBuilder.Entity<Publisher>().HasData(
-            //    new Publisher { Id = 1, Name = "New World" }
+            //    new Publisher { Id = 1, Name = "New World" , book =}
             //);
         }
+        public IBookContract IBookContract;
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
-        //public DbSet<Publisher> publishers { get; set; }
+        public DbSet<Publisher> publishers { get; set; }
     }
 }
