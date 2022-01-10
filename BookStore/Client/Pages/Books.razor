@@ -1,0 +1,119 @@
+﻿@page "/books"
+@inject IBookContract BookContract
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+
+
+@if (BookContract.books.Count == 0)
+{
+    <p><em>Loading books ...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+            <h3>Books</h3>
+            <div class="row">
+                @if (BookContract.books.Any())
+                {
+                    @foreach (var book in BookContract.books)
+                    {
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 mh-25 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">#@book.Id @book.Title</h5>
+                                    <p class="card-text">Genre: @book.Category.Name</p>
+                                    <a href="/books" @onclick="(() => ShowBook(book.Id))">Show&nbsp;</a>
+                                    <a href="/books" @onclick="(() => EditBook(book.Id))">Edit&nbsp;</a>
+                                    <a href="/books" @onclick="(() => DeleteBook(book.Id))">Delete&nbsp;</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No books available</p>
+                }
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <h3>Details</h3>
+            @if (bookToShow.Title is not null)
+            {
+                <h2>@bookToShow.Title</h2>
+                <p>@bookToShow.Description</p>
+            }
+            else
+            {
+                <p>No book selected</p>
+            }
+        </div>
+    </div>
+}
+@*    <table class="table">
+    <thead>
+    <tr>
+    <th>Title</th>
+    <th>Dscription</th>
+    <th>Category</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var book in BookContract.books)
+    {
+    <tr>
+    <td>@book.Title</td>
+    <td>@book.Description</td>
+    <td>@book.Category.Name</td>
+    <td>
+    <button class="btn btn-primary" @onclick="(() => ShowBook(book.Id))">Show</button>
+    </td>
+    <td>
+    <button class="btn btn-primary" @onclick="(() => EditBook(book.Id))">Edit</button>
+    </td>
+    <td>
+    <button class="btn btn-primary" @onclick="(() => DeleteBook(book.Id))">Delete</button>
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>*@
+
+<EditBook book="bookToEdit"></EditBook>
+
+@code {
+    Book bookToEdit = new Book();
+    Book bookToShow = new Book();
+    List<Book> books = new();
+    protected override async Task OnInitializedAsync()
+    {
+        books = await BookContract.GetBooks();
+        BookContract.OnChange += StateHasChanged;
+    }
+
+    async void ShowBook(int id)
+    {
+        bookToShow = await BookContract.GetBookById(id);
+        //NavigationManager.NavigateTo($"book/{id}");
+    }
+
+    void EditBook(int id)
+    {
+        bookToEdit = BookContract.books.Find(x => x.Id == id);
+    }
+
+    void DeleteBook(int id)
+    {
+        BookContract.DeleteBook(id);
+    }
+
+    public void Dispose()
+    {
+        BookContract.OnChange -= StateHasChanged;
+    }
+}

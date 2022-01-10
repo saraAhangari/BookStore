@@ -1,0 +1,25 @@
+﻿@page "/book/{id:int}"
+@inject IBookContract BookContract
+
+
+@if (book == null)
+{
+    <span>Book is loading...</span>
+}
+else
+{
+    <h2>This is @book.Title</h2>
+    <h5>Description</h5>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Book book = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        book = await BookContract.GetBookById(Id);
+    }
+}
