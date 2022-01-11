@@ -49,7 +49,7 @@ else
     <div class="form-group">
         <div class="form-group">
             <button type="button" class="btn btn-secondary"
-                    @onclick="@(() =>AddAuthors(book))">
+                    @onclick="@(() =>book.Authors.Add(new Author()))">
                 Add Author
             </button>
         </div>
@@ -109,10 +109,6 @@ else
         {
             await BookContract.UpdateBook(book, book.Id);
         }
-    }
-    void AddAuthors(Book book)
-    {
-
     }
     private void Clear()
     {

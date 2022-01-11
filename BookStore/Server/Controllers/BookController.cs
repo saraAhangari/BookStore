@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace BookStore.Server.Controllers
 {
@@ -60,9 +61,46 @@ namespace BookStore.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBook(Book book)
         {
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
+            try
+            {
+                UpdateBookAuthors(book);
+                _context.Books.Add(book);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+            }
+            
             return Ok(await GetDbBooks());
+        }
+
+        private void UpdateBookAuthors(Book book)
+        {
+            List<Author> oldAuthors = new List<Author>();
+            List<Author> newAuthors = new List<Author>();
+            if (book.Authors != null)
+            {
+                foreach (var item in book.Authors)
+                {
+                    var author = _context.Authors.Where(a => a.Lastname.Equals(item.Lastname)).FirstOrDefault();
+                    if (author != null)
+                    {
+                        oldAuthors.Add(item);
+                        newAuthors.Add(author);
+                    }
+                }
+
+                foreach (var item in oldAuthors)
+                {
+                    book.Authors.Remove(item);
+                }
+                foreach (var item in newAuthors)
+                {
+                    book.Authors.Add(item);
+                }
+
+            }
         }
 
         [HttpPut("{id}")]
