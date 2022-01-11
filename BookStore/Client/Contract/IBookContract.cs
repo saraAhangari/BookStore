@@ -10,6 +10,7 @@ namespace BookStore.Client.Contract
         event Action OnChange;
         List<Category> categories { get; set; }
         List<Book> books { get; set; }
+        List<Author> authors { get; set; }
         List<Publisher> publishers { get; set; }
         Task<List<Book>> GetBooks();
         Task GetCategories();

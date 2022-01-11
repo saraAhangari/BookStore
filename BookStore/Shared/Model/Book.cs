@@ -17,7 +17,12 @@ namespace BookStore.Shared.Model
         public int publisherId { get; set; } = 1;
         public Publisher publisher { get; set; }
 
+        public IList<Author> Authors { get; set; }
 
+        public Book()
+        {
+            Authors = new List<Author>();
+        }
 
     }
 }

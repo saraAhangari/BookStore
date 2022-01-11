@@ -26,6 +26,18 @@ namespace BookStore.Server.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Ok(await _context.Categories.ToListAsync());
+        }
+
+        [HttpGet("publishers")]
+        public async Task<IActionResult> GetPublishers()
+        {
+            return Ok(await _context.publishers.ToListAsync());
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
@@ -45,27 +57,13 @@ namespace BookStore.Server.Controllers
             return Ok(book);
         }
 
-        [HttpGet("categories")]
-        public async Task<IActionResult> GetCategories()
-        {
-            return Ok(await _context.Categories.ToListAsync());
-        }
-
-        [HttpGet("publishers")]
-        public async Task<IActionResult> GetPublishers()
-        {
-            return Ok(await _context.publishers.ToListAsync());
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateBook(Book book)
         {
             _context.Books.Add(book);
-
             await _context.SaveChangesAsync();
             return Ok(await GetDbBooks());
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(Book book, int id)
