@@ -13,16 +13,12 @@ namespace BookStore.Server.DBcontext
         {
 
         }
-        public BookStoreContext()
-        {
-
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().HasData(
-                new Book { Id = 1, Title = "power", Description = "nothing" },
-                new Book { Id = 2, Title = "I,Tonya", Description = "nothing" }
+                new Book { Id = 1, Title = "power", Description = "nothing", categoryId = 2, publisherId = 1 },
+                new Book { Id = 2, Title = "I,Tonya", Description = "nothing", categoryId = 3, publisherId = 1 }
             );
 
 
@@ -34,13 +30,12 @@ namespace BookStore.Server.DBcontext
                 new Category { Id = 5, Name = "Romance" }
             );
 
-            modelBuilder.Entity<Publisher>().HasData(
-                new Publisher { Id = 1, Name = "New World"}
-            );
+            //modelBuilder.Entity<Publisher>().HasData(
+            //    new Publisher { Id = 1, Name = "New World" , book =}
+            //);
         }
         public IBookContract IBookContract;
         public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Publisher> publishers { get; set; }
     }

@@ -6,18 +6,16 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-
 namespace BookStore.Client.Service
 {
     public class BookService : IBookContract
     {
         public HttpClient _httpClient { get; }
-
-        public event Action OnChange;
         public List<Category> categories { get; set; } = new List<Category>();
         public List<Book> books { get; set; } = new List<Book>();
         public List<Publisher> publishers { get; set; } = new List<Publisher>();
-        public List<Author> authors { get; set; } = new List<Author>();
+
+        public event Action OnChange;
 
         public BookService(HttpClient httpClient)
         {
@@ -49,14 +47,15 @@ namespace BookStore.Client.Service
         {
             publishers = await _httpClient.GetFromJsonAsync<List<Publisher>>("api/book/publishers");
         }
+
+        public async Task<Book> GetBookById(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<Book>($"api/book/{id}");
+        }
         public async Task<List<Book>> GetBooks()
         {
             books = await _httpClient.GetFromJsonAsync<List<Book>>("api/book");
             return books;
-        }
-        public async Task<Book> GetBookById(int id)
-        {
-            return await _httpClient.GetFromJsonAsync<Book>($"api/book/{id}");
         }
 
         public async Task<List<Book>> UpdateBook(Book book, int id)
@@ -66,7 +65,5 @@ namespace BookStore.Client.Service
             OnChange.Invoke();
             return books;
         }
-
-
     }
 }

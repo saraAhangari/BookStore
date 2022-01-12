@@ -71,7 +71,7 @@ namespace BookStore.Server.Controllers
             {
                 var x = ex;
             }
-            
+
             return Ok(await GetDbBooks());
         }
 
