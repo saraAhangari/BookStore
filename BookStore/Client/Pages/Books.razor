@@ -44,6 +44,17 @@ else
             {
                 <h2>@bookToShow.Title</h2>
                 <p>@bookToShow.Description</p>
+
+                <h4>Authors</h4>
+                @if (bookToShow.Authors.Any())
+                {
+                    @foreach (var item in bookToShow.Authors)
+                    {
+                       <p>Name: @item.Firstname  @item.Lastname</p>
+                       <p>Email: @item.Email</p>
+                       <p>phone: @item.phone</p>
+                    }
+                }
             }
             else
             {
