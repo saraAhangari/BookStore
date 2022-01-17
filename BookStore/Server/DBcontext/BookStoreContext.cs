@@ -17,8 +17,8 @@ namespace BookStore.Server.DBcontext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().HasData(
-                new Book { Id = 1, Title = "power", Description = "nothing"},
-                new Book { Id = 2, Title = "I,Tonya", Description = "nothing"}
+                new Book { Id = 1, Title = "The Forty Rules of Love", Description = "nothing"},
+                new Book { Id = 2, Title = "The Gaze", Description = "nothing"}
             );
 
 
@@ -31,12 +31,16 @@ namespace BookStore.Server.DBcontext
             );
 
             modelBuilder.Entity<Publisher>().HasData(
-                new Publisher { Id = 1, Name = "New World"}
+                new Publisher { Id = 1, Name = "New World"},
+                new Publisher { Id = 2, Name = "Pearson" },
+                new Publisher { Id = 3, Name = "ThomsonReuters" },
+                new Publisher { Id = 4, Name = "Wolters Kluwer" },
+                new Publisher { Id = 5, Name = "Reed Elsevier" }
             );
 
             modelBuilder.Entity<Author>().HasData(
-               new Author { Id = 1, Firstname="sara", Lastname="ahn", Email="sara.ahn02@gmail.com"
-               , phone= "09169474135"}
+               new Author { Id = 1, Firstname= "Elif", Lastname= "Shafak", Email= "Shafak2@gmail.com"
+               , phone= "444-885-781"}
            );
         }
         public IBookContract IBookContract;

@@ -128,6 +128,7 @@ namespace BookStore.Server.Controllers
             dbBook.categoryId = book.categoryId;
             dbBook.publisherId = book.publisherId;
             dbBook.Authors = book.Authors;
+            UpdateBookAuthors(dbBook);
 
             await _context.SaveChangesAsync();
             return Ok(await GetDbBooks());
