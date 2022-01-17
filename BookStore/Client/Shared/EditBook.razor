@@ -69,6 +69,14 @@ else
                 <label>LastName:</label>
                 <InputText class="form-control" @bind-Value="author.Lastname" />
             </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <InputText class="form-control" @bind-Value="author.Email" />
+            </div>
+            <div class="form-group">
+                <label>Phone Number:</label>
+                <InputText class="form-control" @bind-Value="author.phone" />
+            </div>
             <button type="button" class="btn btn-danger"
                     @onclick="@(() => book.Authors.RemoveAt(index))">
                 Remove
@@ -85,11 +93,13 @@ else
     public Book book { get; set; } = new Book();
     int categoryId = 1;
     int publisherId = 1;
+    public IList<Author> authors;
 
     protected override async Task OnParametersSetAsync()
     {
         await BookContract.GetCategories();
         await BookContract.GetPublishers();
+        await BookContract.GetAuthors();
     }
 
     async void HandleSubmit()
@@ -98,6 +108,7 @@ else
         book.categoryId = categoryId;
         book.publisher = null;
         book.publisherId = publisherId;
+        authors = book.Authors;
 
         await JSRuntime.InvokeVoidAsync("console.log", book);
 

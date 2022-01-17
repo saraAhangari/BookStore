@@ -22,8 +22,10 @@ namespace BookStore.Server.Controllers
         }
         private async Task<List<Book>> GetDbBooks()
         {
-            return await _context.Books.Include(b => b.Category)
-                .Include(a => a.publisher)
+            return await _context.Books
+                .Include(b => b.Category)
+                .Include(b => b.publisher)
+                .Include(b => b.Authors)
                 .ToListAsync();
         }
 
@@ -137,6 +139,7 @@ namespace BookStore.Server.Controllers
             var dbBook = await _context.Books
                 .Include(b => b.Category)
                 .Include(b => b.publisher)
+                .Include(b => b.Authors)
                 .FirstOrDefaultAsync(b => b.Id == id);
             if (dbBook == null)
                 return NotFound("Book wasn't found. Too bad. :(");
