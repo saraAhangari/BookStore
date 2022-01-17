@@ -1,0 +1,37 @@
+﻿@page "/publishers"
+@inject IBookContract BookContract
+@implements IDisposable
+
+<h3>Publishers</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var publisher in BookContract.publishers)
+        {
+            <tr>
+                <td>@publisher.Id</td>
+                <td>@publisher.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BookContract.GetPublishers();
+        BookContract.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        BookContract.OnChange -= StateHasChanged;
+    }
+
+}

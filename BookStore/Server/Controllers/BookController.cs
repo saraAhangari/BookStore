@@ -109,6 +109,7 @@ namespace BookStore.Server.Controllers
             var dbBook = await _context.Books
                 .Include(b => b.Category)
                 .Include(b => b.publisher)
+                .Include(b => b.Authors)
                 .FirstOrDefaultAsync(b => b.Id == id);
             if (dbBook == null)
                 return NotFound("Book wasn't found. Too bad. :(");
@@ -117,6 +118,7 @@ namespace BookStore.Server.Controllers
             dbBook.Description = book.Description;
             dbBook.categoryId = book.categoryId;
             dbBook.publisherId = book.publisherId;
+            dbBook.Authors = book.Authors;
 
             await _context.SaveChangesAsync();
             return Ok(await GetDbBooks());

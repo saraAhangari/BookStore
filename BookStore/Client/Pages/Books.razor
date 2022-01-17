@@ -1,6 +1,5 @@
 ﻿@page "/books"
 @inject IBookContract BookContract
-@inject NavigationManager NavigationManager
 @implements IDisposable
 
 
@@ -53,38 +52,6 @@ else
         </div>
     </div>
 }
-@*    <table class="table">
-    <thead>
-    <tr>
-    <th>Title</th>
-    <th>Dscription</th>
-    <th>Category</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var book in BookContract.books)
-    {
-    <tr>
-    <td>@book.Title</td>
-    <td>@book.Description</td>
-    <td>@book.Category.Name</td>
-    <td>
-    <button class="btn btn-primary" @onclick="(() => ShowBook(book.Id))">Show</button>
-    </td>
-    <td>
-    <button class="btn btn-primary" @onclick="(() => EditBook(book.Id))">Edit</button>
-    </td>
-    <td>
-    <button class="btn btn-primary" @onclick="(() => DeleteBook(book.Id))">Delete</button>
-    </td>
-    </tr>
-    }
-    </tbody>
-    </table>*@
-
 <EditBook book="bookToEdit"></EditBook>
 
 @code {
@@ -100,7 +67,6 @@ else
     async void ShowBook(int id)
     {
         bookToShow = await BookContract.GetBookById(id);
-        //NavigationManager.NavigateTo($"book/{id}");
     }
 
     void EditBook(int id)
