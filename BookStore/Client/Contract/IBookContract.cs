@@ -15,6 +15,7 @@ namespace BookStore.Client.Contract
         Task<List<Book>> GetBooks();
         Task GetCategories();
         Task GetPublishers();
+        Task GetAuthors();
         Task<Book> GetBookById(int id);
         Task<List<Book>> CreateBook(Book book);
         Task<List<Book>> UpdateBook(Book book, int id);

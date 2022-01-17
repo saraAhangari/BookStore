@@ -33,6 +33,11 @@ namespace BookStore.Server.DBcontext
             modelBuilder.Entity<Publisher>().HasData(
                 new Publisher { Id = 1, Name = "New World"}
             );
+
+            modelBuilder.Entity<Author>().HasData(
+               new Author { Id = 1, Firstname="sara", Lastname="ahn", Email="sara.ahn02@gmail.com"
+               , phone= "09169474135"}
+           );
         }
         public IBookContract IBookContract;
         public DbSet<Book> Books { get; set; }

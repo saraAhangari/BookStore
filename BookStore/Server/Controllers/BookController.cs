@@ -39,6 +39,12 @@ namespace BookStore.Server.Controllers
             return Ok(await _context.publishers.ToListAsync());
         }
 
+        [HttpGet("authors")]
+        public async Task<IActionResult> GetAuthors()
+        {
+            return Ok(await _context.Authors.ToListAsync());
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {

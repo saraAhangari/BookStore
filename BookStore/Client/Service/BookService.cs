@@ -14,7 +14,7 @@ namespace BookStore.Client.Service
         public List<Category> categories { get; set; } = new List<Category>();
         public List<Book> books { get; set; } = new List<Book>();
         public List<Publisher> publishers { get; set; } = new List<Publisher>();
-        public List<Author> authors { get; set; }
+        public List<Author> authors { get; set; } = new List<Author>();
 
         public event Action OnChange;
 
@@ -42,13 +42,15 @@ namespace BookStore.Client.Service
         public async Task GetCategories()
         {
             categories = await _httpClient.GetFromJsonAsync<List<Category>>("api/book/categories");
-            OnChange.Invoke();
         }
 
         public async Task GetPublishers()
         {
             publishers = await _httpClient.GetFromJsonAsync<List<Publisher>>("api/book/publishers");
-            OnChange.Invoke();
+        }
+        public async Task GetAuthors()
+        {
+            authors = await _httpClient.GetFromJsonAsync<List<Author>>("api/book/authors");
         }
 
         public async Task<Book> GetBookById(int id)
